@@ -63,11 +63,12 @@ middleware.connect = (store, channel, options) => {
   // public car object returned
   return {
     changeChannel: car.changeChannel.bind(car),
+    disconnect: car.disconnect.bind(car),
     getChannel: car.getChannel.bind(car),
     getParams: car.getParams.bind(car),
     perform: car.perform.bind(car),
     send: car.send.bind(car),
-    unsubscribe: car.unsubscribe.bind(car)
+    unsubscribe: car.unsubscribe.bind(car),
   };
 }
 

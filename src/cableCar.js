@@ -30,7 +30,8 @@ export default class CableCar {
     let cableParams = options.params || {};
     cableParams = Object.assign({ channel }, cableParams);
 
-    this.subscription = this.actionCableProvider.createConsumer(options.wsURL).subscriptions.create(
+    this.consumer = this.actionCableProvider.createConsumer(options.wsURL);
+    this.subscription = this.consumer.subscriptions.create(
       cableParams, {
         initialized: this.initialized,
         connected: this.connected,
@@ -89,6 +90,11 @@ export default class CableCar {
     return prefix === this.options.prefix;
   }
 
+  // ActionCable consumer functions (exposed globally)
+  disconnect() {
+    this.consumer.disconnect();
+  }
+
   // ActionCable subscription functions (exposed globally)
   changeChannel(channel, options = {}) {
     this.unsubscribe();
@@ -115,4 +121,6 @@ export default class CableCar {
     this.subscription.unsubscribe();
     this.disconnected();
   }
+
+
 }

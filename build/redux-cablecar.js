@@ -141,6 +141,7 @@ module.exports =
 	  // public car object returned
 	  return {
 	    changeChannel: car.changeChannel.bind(car),
+	    disconnect: car.disconnect.bind(car),
 	    getChannel: car.getChannel.bind(car),
 	    getParams: car.getParams.bind(car),
 	    perform: car.perform.bind(car),
@@ -237,7 +238,8 @@ module.exports =
 	      var cableParams = options.params || {};
 	      cableParams = Object.assign({ channel: channel }, cableParams);
 
-	      this.subscription = this.actionCableProvider.createConsumer(options.wsURL).subscriptions.create(cableParams, {
+	      this.consumer = this.actionCableProvider.createConsumer(options.wsURL);
+	      this.subscription = this.consumer.subscriptions.create(cableParams, {
 	        initialized: this.initialized,
 	        connected: this.connected,
 	        disconnected: this.disconnected,
@@ -274,6 +276,14 @@ module.exports =
 	    value: function matchPrefix(type) {
 	      var prefix = type.slice(0, this.options.prefix.length);
 	      return prefix === this.options.prefix;
+	    }
+
+	    // ActionCable consumer functions (exposed globally)
+
+	  }, {
+	    key: 'disconnect',
+	    value: function disconnect() {
+	      this.consumer.disconnect();
 	    }
 
 	    // ActionCable subscription functions (exposed globally)

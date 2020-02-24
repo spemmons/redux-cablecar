@@ -72,6 +72,9 @@ For example, if the `prefix` is set to `'SYSTEM'`:
 ## CableCar object
 The middleware's `#connect` function returns a CableCar object with the following functions:
 
+### #disconnect()
+Manually disconnect the car from the server
+
 ### #changeChannel(channel, options)
 Manually change the car's channel.  
 (See below on how to do it with a *Redux action*)
